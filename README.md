@@ -4,7 +4,7 @@ Terraform module for managing Unifi Controller resources
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/rkoosaar/terraform-unifi-controller?cacheSeconds=36)](https://github.com/rkoosaar/terraform-unifi-controller/releases/latest)
-[![TF Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/claranet/keyvault/azurerm/)
+[![TF Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/rkoosaar/controller/unifi)
 
 ## Examples
 
