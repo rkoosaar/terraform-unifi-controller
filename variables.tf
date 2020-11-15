@@ -308,3 +308,123 @@ variable "un_x_wan_password" {
   type        = string
   default     = null
 }
+
+## variables for unifi wlan
+
+variable "uw_enable" {
+  type        = bool
+  description = "Enables or Disables unifi wlan creation. Defaults to false"
+  default     = false
+}
+
+# Required
+variable "uw_name" {
+  description = "The SSID of the network"
+  type        = string
+  default     = null
+}
+
+variable "uw_security" {
+  description = "The type of WiFi security for this network. Valid values are: wpapsk, wpaeap, and open"
+  type        = string
+  default     = null
+}
+
+variable "uw_user_group_id" {
+  description = "ID of the user group to use for this network"
+  type        = string
+  default     = null
+}
+
+# Optional
+
+variable "uw_ap_group_ids" {
+  description = "IDs of the AP groups to use for this network"
+  type        = list
+  default     = null
+}
+
+variable "uw_hide_ssid" {
+  description = "Indicates whether or not to hide the SSID from broadcast"
+  type        = bool
+  default     = null
+}
+
+variable "uw_is_guest" {
+  description = "Indicates that this is a guest WLAN and should use guest behaviors"
+  type        = bool
+  default     = null
+}
+
+variable "uw_mac_filter_enabled" {
+  description = "Indicates whether or not the MAC filter is turned of for the network"
+  type        = bool
+  default     = null
+}
+
+variable "uw_mac_filter_list" {
+  description = "List of MAC addresses to filter (only valid if mac_filter_enabled is true)"
+  type        = list
+  default     = null
+}
+
+variable "uw_mac_filter_policy" {
+  description = "MAC address filter policy (only valid if mac_filter_enabled is true). Allow or Deny. Defaults to deny"
+  type        = string
+  default     = null
+}
+
+variable "uw_multicast_enhance" {
+  description = "Indicates whether or not Multicast Enhance is turned of for the network"
+  type        = bool
+  default     = null
+}
+
+variable "uw_network_id" {
+  description = "ID of the network for this SSID"
+  type        = string
+  default     = null
+}
+
+variable "uw_passphrase" {
+  description = "The passphrase for the network, this is only required if security is not set to open"
+  type        = string
+  default     = null
+}
+
+variable "uw_radius_profile_id" {
+  description = "ID of the RADIUS profile to use when security wpaeap. You can query this via the unifi_radius_profile data source"
+  type        = string
+  default     = null
+}
+
+variable "uw_schedule" {
+  description = "(Block List) Start and stop schedules for the WLAN"
+  # block_end (String, Required) Time of day to end the block.
+  # block_start (String, Required) Time of day to start the block.
+  # day_of_week (String, Required) Day of week for the block. Valid values are sun, mon, tue, wed, thu, fri, sat.
+  type = object({
+    block_end   = string
+    block_start = string
+    day_of_week = string
+  })
+  default = null
+}
+
+variable "uw_site" {
+  description = "The name of the site to associate the wlan with. Defaults to 'default'"
+  type        = string
+  default     = null
+}
+
+variable "uw_vlan_id" {
+  description = "Deprecated - VLAN ID for the network. Set network_id instead of vlan_id for controller version >= 6"
+  type        = string
+  default     = null
+}
+
+variable "uw_wlan_group_id" {
+  description = "Deprecated - ID of the WLAN group to use for this network. Set ap_group_ids instead of wlan_group_id for controller version >= 6"
+  type        = string
+  default     = null
+}

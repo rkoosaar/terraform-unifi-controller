@@ -11,7 +11,8 @@ resource "unifi_firewall_group" "ufg" {
 
 resource "unifi_firewall_rule" "ufr" {
   count = var.ufr_enable ? 1 : 0
-  ## Required
+
+  # Required
   name     = var.ufr_name
   action   = var.ufr_action
   protocol = var.ufr_protocol
@@ -70,4 +71,38 @@ resource "unifi_network" "un" {
   wan_type            = var.un_wan_type
   wan_username        = var.un_wan_username
   x_wan_password      = var.un_x_wan_password
+}
+
+resource "unifi_wlan" "uw" {
+  count = var.uw_enable ? 1 : 0
+
+  # Required
+  name          = var.uw_name
+  security      = var.uw_security
+  user_group_id = var.uw_user_group_id
+
+  # Optional
+  ap_group_ids       = var.uw_ap_group_ids
+  hide_ssid          = var.uw_hide_ssid
+  is_guest           = var.uw_is_guest
+  mac_filter_enabled = var.uw_mac_filter_enabled
+  mac_filter_list    = var.uw_mac_filter_list
+  mac_filter_policy  = var.uw_mac_filter_policy
+  multicast_enhance  = var.uw_multicast_enhance
+  network_id         = var.uw_network_id
+  passphrase         = var.uw_passphrase
+  radius_profile_id  = var.uw_radius_profile_id
+  
+  dynamic "schedule" {
+    for_each = var.uw_schedule == null ? [] : list(var.uw_schedule)
+    content {
+      block_end = schedule.value.block_end
+      block_start   = schedule.value.block_start
+      day_of_week = schedule.value.day_of_week
+    }
+  }
+
+  site               = var.uw_site
+  vlan_id            = var.uw_vlan_id
+  wlan_group_id      = var.uw_wlan_group_id
 }

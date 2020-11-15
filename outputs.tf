@@ -9,3 +9,7 @@ output "ufr-id" {
 output "un-id" {
   value = unifi_network.un.*.id
 }
+
+output "uw-id" {
+  value = unifi_wlan.uw.*.id
+}
