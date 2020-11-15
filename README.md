@@ -44,6 +44,36 @@ module "unifi-fw-rule" {
   # Optional - Destination
   ufr_dst_address = "10.16.80.227"
 }
+
+module "unifi-wlan-test" {
+  source = "../modules/terraform-unifi-controller"
+  
+  # Create or not
+  uw_enable = true
+
+  # Required
+  uw_name = "TEST-SSID"
+  uw_security       = "wpapsk"
+  uw_user_group_id    = data.unifi_user_group.default.id
+
+  # Optional
+  uw_ap_group_ids = [data.unifi_ap_group.default.id]
+  uw_hide_ssid = true
+  uw_is_guest = false
+  uw_mac_filter_enabled = true
+  uw_mac_filter_list = ["02:3D:40:19:E7:D5","22:E4:C7:B8:23:1E"]
+  uw_mac_filter_policy = "allow"
+  uw_multicast_enhance = true
+  uw_network_id = local.ufr_src_network_id_format
+  uw_passphrase = "testtest.11"
+  #uw_radius_profile_id = ""  
+  uw_schedule = {
+      block_end = "11:01",
+      block_start = "12:00",
+      day_of_week = "sat",
+    }
+  #uw_site = "default"
+}
 ```
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -56,7 +86,7 @@ module "unifi-fw-rule" {
 
 | Name | Version |
 | --- | --- |
-| unifi | >= 0.17.0 |
+| unifi | >= 0.18.0 |
 
 ## Inputs
 
@@ -124,6 +154,37 @@ module "unifi-fw-rule" {
 | un\_wan\_username | Specifies the IPV4 WAN username | `string` | no  |
 | un\_x\_wan_password | Specifies the IPV4 WAN password | `string` | no  |
 
+### unifi_wlan
+
+| Name | Description | Type | Required |
+| --- | --- | --- | --- |
+| uw_enable | Enables or Disables unifi wlan creation. Defaults to false | `bool` | yes |
+| uw_name | The SSID of the network | `string` | yes |
+| uw_security | The type of WiFi security for this network. Valid values are: wpapsk, wpaeap, and open | `string` | yes |
+| uw\_user\_group_id | ID of the user group to use for this network | `string` | yes |
+| uw\_ap\_group_ids | IDs of the AP groups to use for this network | `list` | no  |
+| uw\_hide\_ssid | Indicates whether or not to hide the SSID from broadcast | `bool` | no  |
+| uw\_is\_guest | Indicates that this is a guest WLAN and should use guest behaviors | `bool` | no  |
+| uw\_mac\_filter_enabled | Indicates whether or not the MAC filter is turned of for the network | `bool` | no  |
+| uw\_mac\_filter_list | List of MAC addresses to filter (only valid if mac\_filter\_enabled is true) | `list` | no  |
+| uw\_mac\_filter_policy | MAC address filter policy (only valid if mac\_filter\_enabled is true). Allow or Deny. Defaults to deny | `string` | no  |
+| uw\_multicast\_enhance | Specifies whether IGMP snooping is enabled or not | `bool` | no  |
+| uw\_network\_id | ID of the network for this SSID | `string` | no  |
+| uw_passphrase | Specifies which WAN interface to use for IPv6 PD | `string` | no  |
+| uw\_radius\_profile_id | Specifies the IPv6 Prefix ID | `string` | no  |
+| uw\_schedule | Start and stop schedules for the WLAN. See Below | `block list` | no  |
+| uw_site | The name of the site to associate the wlan with. Defaults to 'default | `string` | no  |
+| uw\_vlan\_id | Deprecated - VLAN ID for the network. Set network\_id instead of vlan\_id for controller version >= 6 | `number` | no  |
+| uw\_wlan\_group_id | Deprecated - ID of the WLAN group to use for this network. Set ap\_group\_ids instead of wlan\_group\_id for controller version >= 6 | `string` | no  |
+
+### unifi\_wlan schedule (uw\_schedule)
+
+| Name | Description | Type | Required |
+| --- | --- | --- | --- |
+| block_end | Time of day to end the block | `string` | yes |
+| block_start | Time of day to start the block | `string` | yes |
+| day\_of\_week | Day of week for the block. Valid values are sun, mon, tue, wed, thu, fri, sat | `string` | yes |
+
 ## Outputs
 
 | Name | Description |
@@ -131,6 +192,7 @@ module "unifi-fw-rule" {
 | ufg-id | Resource unifi\_firewall\_group id |
 | ufr-id | Resource unifi\_firewall\_rule id |
 | un-id | Resource unifi_network id |
+| uw-id | Resource unifi_wlan id |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

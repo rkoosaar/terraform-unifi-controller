@@ -124,3 +124,33 @@ module "unifi-net-vlan" {
   #un_wan_username = 
   #un_x_wan_password = 
 }
+
+module "unifi-wlan-test" {
+  source = "../modules/terraform-unifi-controller"
+  
+  # Create or not
+  uw_enable = true
+
+  # Required
+  uw_name = "TEST-SSID"
+  uw_security       = "wpapsk"
+  uw_user_group_id    = data.unifi_user_group.default.id
+
+  # Optional
+  uw_ap_group_ids = [data.unifi_ap_group.default.id]
+  uw_hide_ssid = true
+  uw_is_guest = false
+  uw_mac_filter_enabled = true
+  uw_mac_filter_list = ["02:3D:40:19:E7:D5","22:E4:C7:B8:23:1E"]
+  uw_mac_filter_policy = "allow"
+  uw_multicast_enhance = true
+  uw_network_id = local.ufr_src_network_id_format
+  uw_passphrase = "testtest.11"
+  #uw_radius_profile_id = ""  
+#   uw_schedule = {
+#       block_end = "11:01",
+#       block_start = "12:00",
+#       day_of_week = "sat",
+#     }
+  #uw_site = "default"
+}
