@@ -1,6 +1,6 @@
 locals {
   ufr_src_firewall_group_ids = flatten([[module.unifi-fw-addressgroup.ufg-id], [], [module.unifi-fw-portgroup.ufg-id]])
-  ufr_src_network_id_format = element(module.unifi-net-vlan.un-id, 0)
+  ufr_src_network_id_format  = element(module.unifi-net-vlan.un-id, 0)
 }
 
 module "unifi-fw-addressgroup" {
@@ -127,34 +127,34 @@ module "unifi-net-vlan" {
 
 module "unifi-wlan-test" {
   source = "../modules/terraform-unifi-controller"
-  
+
   # Create or not
   uw_enable = true
 
   # Required
-  uw_name = "TEST-SSID"
-  uw_security       = "wpapsk"
-  uw_user_group_id    = data.unifi_user_group.default.id
+  uw_name          = "TEST-SSID"
+  uw_security      = "wpapsk"
+  uw_user_group_id = data.unifi_user_group.default.id
 
   # Optional
-  uw_ap_group_ids = [data.unifi_ap_group.default.id]
-  uw_hide_ssid = true
-  uw_is_guest = false
+  uw_ap_group_ids       = [data.unifi_ap_group.default.id]
+  uw_hide_ssid          = true
+  uw_is_guest           = false
   uw_mac_filter_enabled = true
-  uw_mac_filter_list = ["02:3D:40:19:E7:D5","22:E4:C7:B8:23:1E"]
-  uw_mac_filter_policy = "allow"
-  uw_multicast_enhance = true
-  uw_network_id = local.ufr_src_network_id_format
-  uw_passphrase = "testtest.11"
-  uw_radius_profile_id = ""  
+  uw_mac_filter_list    = ["02:3D:40:19:E7:D5", "22:E4:C7:B8:23:1E"]
+  uw_mac_filter_policy  = "allow"
+  uw_multicast_enhance  = true
+  uw_network_id         = local.ufr_src_network_id_format
+  uw_passphrase         = "testtest.11"
+  uw_radius_profile_id  = ""
   uw_schedule = {
     "Mon" = {
-      block_end = "12:00",
+      block_end   = "12:00",
       block_start = "10:00",
       day_of_week = "mon"
     },
     "Sat" = {
-      block_end = "12:00",
+      block_end   = "12:00",
       block_start = "10:00",
       day_of_week = "sat"
     }

@@ -92,17 +92,17 @@ resource "unifi_wlan" "uw" {
   network_id         = var.uw_network_id
   passphrase         = var.uw_passphrase
   radius_profile_id  = var.uw_radius_profile_id
-  
+
   dynamic "schedule" {
     for_each = var.uw_schedule
     content {
-      block_end = schedule.value.block_end
-      block_start   = schedule.value.block_start
+      block_end   = schedule.value.block_end
+      block_start = schedule.value.block_start
       day_of_week = schedule.value.day_of_week
     }
   }
 
-  site               = var.uw_site
-  vlan_id            = var.uw_vlan_id
-  wlan_group_id      = var.uw_wlan_group_id
+  site          = var.uw_site
+  vlan_id       = var.uw_vlan_id
+  wlan_group_id = var.uw_wlan_group_id
 }
