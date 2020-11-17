@@ -35,6 +35,6 @@ jobs:
           release_name: Release ${{ env.HEAD_TAG }}
           body: |
             Changes in this Release
-            - First Change
+            - wlan fix to allow using multiple days in uw_schedule block
           draft: false
           prerelease: false
