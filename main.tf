@@ -94,7 +94,7 @@ resource "unifi_wlan" "uw" {
   radius_profile_id  = var.uw_radius_profile_id
   
   dynamic "schedule" {
-    for_each = var.uw_schedule == null ? [] : list(var.uw_schedule)
+    for_each = var.uw_schedule
     content {
       block_end = schedule.value.block_end
       block_start   = schedule.value.block_start

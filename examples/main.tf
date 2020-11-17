@@ -146,11 +146,18 @@ module "unifi-wlan-test" {
   uw_multicast_enhance = true
   uw_network_id = local.ufr_src_network_id_format
   uw_passphrase = "testtest.11"
-  #uw_radius_profile_id = ""  
-#   uw_schedule = {
-#       block_end = "11:01",
-#       block_start = "12:00",
-#       day_of_week = "sat",
-#     }
+  uw_radius_profile_id = ""  
+  uw_schedule = {
+    "Mon" = {
+      block_end = "12:00",
+      block_start = "10:00",
+      day_of_week = "mon"
+    },
+    "Sat" = {
+      block_end = "12:00",
+      block_start = "10:00",
+      day_of_week = "sat"
+    }
+  }
   #uw_site = "default"
 }

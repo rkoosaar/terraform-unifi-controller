@@ -403,12 +403,12 @@ variable "uw_schedule" {
   # block_end (String, Required) Time of day to end the block.
   # block_start (String, Required) Time of day to start the block.
   # day_of_week (String, Required) Day of week for the block. Valid values are sun, mon, tue, wed, thu, fri, sat.
-  type = object({
+  type = map(object({
     block_end   = string
     block_start = string
     day_of_week = string
-  })
-  default = null
+  }))
+  default = {}
 }
 
 variable "uw_site" {
